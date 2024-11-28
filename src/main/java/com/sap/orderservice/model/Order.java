@@ -1,25 +1,23 @@
 package com.sap.orderservice.model;
 
-import java.util.Objects;
-
 import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "orders")
 public class Order {
 
     private @Id @GeneratedValue Long id;
-    private String customerCode;
+    private Long customerID;
     private String productCode;
 
     Order() {
     }
 
-    public Order(String customerCode, String productCode) {
-        this.customerCode = customerCode;
+    public Order(Long customerCode, String productCode) {
+        this.customerID = customerCode;
         this.productCode = productCode;
     }
 
@@ -31,8 +29,8 @@ public class Order {
         return String.format("PF0000%s", this.id);
     }
 
-    public String getCustomer() {
-        return this.customerCode;
+    public Long getCustomer() {
+        return this.customerID;
     }
 
     public String getProduct() {
@@ -43,8 +41,8 @@ public class Order {
         this.id = id;
     }
 
-    public void setCustomer(String customerCode) {
-        this.customerCode = customerCode;
+    public void setCustomer(Long customerCode) {
+        this.customerID = customerCode;
     }
 
     public void setProduct(String productCode) {
@@ -52,13 +50,45 @@ public class Order {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(this.id, this.customerCode, this.productCode);
+    public String toString() {
+        return "Order [id=" + id + ", customerCode=" + customerID + ", productCode=" + productCode + "]";
     }
 
     @Override
-    public String toString() {
-        return "Order{" + "id=" + this.id + ", Code='" + this.getCode() + "', Customer='" + this.customerCode + '\'' + ", Product='" + this.productCode
-                + '\'' + '}';
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((customerID == null) ? 0 : customerID.hashCode());
+        result = prime * result + ((productCode == null) ? 0 : productCode.hashCode());
+        return result;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Order other = (Order) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        if (customerID == null) {
+            if (other.customerID != null)
+                return false;
+        } else if (!customerID.equals(other.customerID))
+            return false;
+        if (productCode == null) {
+            if (other.productCode != null)
+                return false;
+        } else if (!productCode.equals(other.productCode))
+            return false;
+        return true;
+    }
+
 }

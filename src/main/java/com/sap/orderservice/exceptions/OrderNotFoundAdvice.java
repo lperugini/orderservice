@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class OrderNotFoundAdvice {
     @ExceptionHandler(OrderNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    String employeeNotFoundHandler(OrderNotFoundException ex) {
+    String orderNotFoundHandler(OrderNotFoundException ex) {
         return ex.getMessage();
     }
 
