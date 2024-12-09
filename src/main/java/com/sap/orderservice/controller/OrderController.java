@@ -49,6 +49,11 @@ class OrderController {
         return repository.save(newOrder);
     }
 
+    @PostMapping("/test")
+    Boolean test(@RequestBody Order newOrder) {
+        return true;
+    }
+
     // Single item
     @GetMapping("/orders/{id}")
     EntityModel<Order> one(@PathVariable Long id) {
