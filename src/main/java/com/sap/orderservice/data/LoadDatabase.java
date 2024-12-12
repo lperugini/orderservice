@@ -18,9 +18,9 @@ class LoadDatabase {
     CommandLineRunner initDatabase(OrderRepo repository) {
 
         return args -> {
-            log.info("Preloading " + repository.save(new Order(Long.valueOf(1), "The Hobbit")));
-            log.info("Preloading " + repository.save(new Order(Long.valueOf(2), "The Lord of the Ring")));
-            log.info("Preloading " + repository.save(new Order(Long.valueOf(2), "The Silmarillion")));
+            log.info("Preloading " + repository.save(new Order(1L, "The Hobbit")));
+            log.info("Preloading " + repository.save(new Order(2L, "The Lord of the Ring")));
+            log.info("Preloading " + repository.save(new Order(2L, "The Silmarillion")));
         };
     }
 }

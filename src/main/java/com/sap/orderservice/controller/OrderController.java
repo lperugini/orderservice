@@ -3,6 +3,7 @@ package com.sap.orderservice.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -20,38 +21,25 @@ import com.sap.orderservice.model.Order;
 import com.sap.orderservice.model.OrderRepo;
 
 @RestController
-class OrderController {
+public class OrderController {
 
-    private final OrderRepo repository;
-    private final OrderAssembler assembler;
+    @Autowired
+    private OrderRepo repository;
+    @Autowired
+    private OrderAssembler assembler;
 
-    OrderController(OrderRepo repository, OrderAssembler assembler) {
-        this.repository = repository;
-        this.assembler = assembler;
-    }
-
-    // Aggregate root
-    // tag::get-aggregate-root[]
     @GetMapping("/orders")
     CollectionModel<EntityModel<Order>> all() {
-        System.out.println("return orders");
-
         List<EntityModel<Order>> orders = repository.findAll().stream()
                 .map(assembler::toModel)
                 .collect(Collectors.toList());
 
         return CollectionModel.of(orders, linkTo(methodOn(OrderController.class).all()).withSelfRel());
     }
-    // end::get-aggregate-root[]
 
     @PostMapping("/orders")
     Order newOrder(@RequestBody Order newOrder) {
         return repository.save(newOrder);
-    }
-
-    @PostMapping("/test")
-    Boolean test(@RequestBody Order newOrder) {
-        return true;
     }
 
     // Single item
@@ -73,7 +61,6 @@ class OrderController {
                 .collect(Collectors.toList());
 
         return CollectionModel.of(orders, linkTo(methodOn(OrderController.class).all()).withSelfRel());
-
     }
 
     @PutMapping("/orders/{id}")

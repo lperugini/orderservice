@@ -13,7 +13,7 @@ public class Order {
     private Long customerID;
     private String productCode;
 
-    Order() {
+    public Order() {
     }
 
     public Order(Long customerCode, String productCode) {
@@ -26,7 +26,7 @@ public class Order {
     }
 
     public String getCode() {
-        return String.format("PF0000%s", this.id);
+        return "PF0000%s".formatted(this.id);
     }
 
     public Long getCustomer() {
@@ -37,16 +37,14 @@ public class Order {
         return this.productCode;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setCustomer(Long customerCode) {
+    public Order setCustomer(Long customerCode) {
         this.customerID = customerCode;
+        return this;
     }
 
-    public void setProduct(String productCode) {
+    public Order setProduct(String productCode) {
         this.productCode = productCode;
+        return this;
     }
 
     @Override
