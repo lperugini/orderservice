@@ -22,7 +22,7 @@ public class MessageConsumer {
         System.out.println("Ricevuto messaggio: " + message);
 
         JSONObject jsonObject = new JSONObject(message);
-        Order newOrder = new Order(jsonObject.getLong("customerCode"), jsonObject.getString("productCode"));
+        Order newOrder = new Order(jsonObject.getLong("userId"), jsonObject.getLong("itemId"));
         Order order = newOrder;
 
         if (jsonObject.has("id")) {
@@ -31,8 +31,8 @@ public class MessageConsumer {
 
             if (optionalOrder.isPresent()) {
                 order = optionalOrder.get();
-                order.setCustomer(newOrder.getCustomer());
-                order.setProduct(newOrder.getProduct());
+                order.setUser(newOrder.getUser());
+                order.setItem(newOrder.getItem());
             }
         } 
         

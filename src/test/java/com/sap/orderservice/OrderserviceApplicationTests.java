@@ -45,7 +45,7 @@ class OrderServiceApplicationTests {
 
 	@Test
 	public void testGetSingleOrder() throws Exception {
-		Order order = new Order(Long.valueOf(1), "The Hobbit");
+		Order order = new Order(Long.valueOf(1), Long.valueOf(3));
 		Optional<Order> optionalOrder = Optional.of(order);
 
 		when(orderRepo.findById(1L)).thenReturn(optionalOrder);
@@ -54,15 +54,15 @@ class OrderServiceApplicationTests {
 		mockMvc.perform(get("/orders/1"))
 				.andExpect(status()
 						.isOk()) // Verifica che la risposta sia 200 OK
-				.andExpect(jsonPath("$.product")
-						.value("The Hobbit")); // Verifica il primo ordine
+				.andExpect(jsonPath("$.item")
+						.value(Long.valueOf(3))); // Verifica il primo ordine
 	}
 
 	@Test
 	public void testGetAllOrders() throws Exception {
 		// Simuliamo i dati restituiti dal repository
-		Order order1 = new Order(Long.valueOf(1), "The Hobbit");
-		Order order2 = new Order(Long.valueOf(2), "The Lord of the Ring");
+		Order order1 = new Order(Long.valueOf(1), Long.valueOf(3));
+		Order order2 = new Order(Long.valueOf(2), Long.valueOf(2));
 		List<Order> orders = Arrays.asList(order1, order2);
 
 		// Definiamo cosa deve restituire il mock del repository
@@ -71,8 +71,8 @@ class OrderServiceApplicationTests {
 		// Eseguiamo la richiesta GET alla route /orders
 		mockMvc.perform(get("/orders"))
 				.andExpect(status().isOk()) // Verifica che la risposta sia 200 OK
-				.andExpect(jsonPath("$._embedded.orderList[0].product").value("The Hobbit")) // Verifica il primo ordine
-				.andExpect(jsonPath("$._embedded.orderList[1].product").value("The Lord of the Ring"));
+				.andExpect(jsonPath("$._embedded.orderList[0].item").value(Long.valueOf(3))) // Verifica il primo ordine
+				.andExpect(jsonPath("$._embedded.orderList[1].item").value(Long.valueOf(2)));
 
 		// Verifica che il metodo findAll() sia stato chiamato una sola volta
 		verify(orderRepo, times(1)).findAll();
@@ -81,7 +81,7 @@ class OrderServiceApplicationTests {
 	@Test
 	public void testReceiveAndSave() {
 		// Simuliamo il messaggio in formato JSON
-		String message = "{\"customerCode\":1,\"productCode\":\"Magic Gandalf\"}";
+		 String message = "{\"userId\":1,\"itemId\":1}";
 
 		ArgumentCaptor<Order> orderCaptor = ArgumentCaptor.forClass(Order.class);
 
@@ -93,7 +93,8 @@ class OrderServiceApplicationTests {
 		verify(orderRepo, times(4)).save(orderCaptor.capture());
 
 		Order savedOrder = orderCaptor.getValue();
-		assertEquals("Magic Gandalf", savedOrder.getProduct());
+		assertEquals(Long.valueOf(1), savedOrder.getItem()); 
+		
 	}
 
 }

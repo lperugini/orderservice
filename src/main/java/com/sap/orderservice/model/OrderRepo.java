@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface OrderRepo extends JpaRepository<Order, Long> {
 
-    @Query("SELECT o FROM Order o WHERE o.customerID = :customerID")
-    List<Order> findByCustomer(@Param("customerID") Long customerID);
+    @Query("SELECT o FROM Order o WHERE o.userId = :userId")
+    List<Order> findByCustomer(@Param("userId") Long userId);
 
 }

@@ -10,15 +10,26 @@ import jakarta.persistence.Table;
 public class Order {
 
     private @Id @GeneratedValue Long id;
-    private Long customerID;
-    private String productCode;
+    private Long userId;
+    private Long itemId;
+    private Double price;
+    private String description;
 
     public Order() {
     }
 
-    public Order(Long customerCode, String productCode) {
-        this.customerID = customerCode;
-        this.productCode = productCode;
+    public Order(Long userId, Long itemId) {
+        this.userId = userId;
+        this.itemId = itemId;
+        this.description = "";
+        this.price = 0.0;
+    }
+
+    public Order(Long userId, Long itemId, String description, Double price) {
+        this.userId = userId;
+        this.itemId = itemId;
+        this.description = description;
+        this.price = price;
     }
 
     public Long getId() {
@@ -29,27 +40,36 @@ public class Order {
         return "PF0000%s".formatted(this.id);
     }
 
-    public Long getCustomer() {
-        return this.customerID;
+    public Long getUser() {
+        return this.userId;
     }
 
-    public String getProduct() {
-        return this.productCode;
+    public Long getItem() {
+        return this.itemId;
     }
 
-    public Order setCustomer(Long customerCode) {
-        this.customerID = customerCode;
+    public Order setUser(Long userId) {
+        this.userId = userId;
         return this;
     }
 
-    public Order setProduct(String productCode) {
-        this.productCode = productCode;
+    public Order setItem(Long itemId) {
+        this.itemId = itemId;
+        return this;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Order setDescription(String description) {
+        this.description = description;
         return this;
     }
 
     @Override
     public String toString() {
-        return "Order [id=" + id + ", customerCode=" + customerID + ", productCode=" + productCode + "]";
+        return "Order [id=" + id + ", userId=" + userId + ", itemId=" + itemId + "]";
     }
 
     @Override
@@ -57,36 +77,18 @@ public class Order {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((id == null) ? 0 : id.hashCode());
-        result = prime * result + ((customerID == null) ? 0 : customerID.hashCode());
-        result = prime * result + ((productCode == null) ? 0 : productCode.hashCode());
+        result = prime * result + ((userId == null) ? 0 : userId.hashCode());
+        result = prime * result + ((itemId == null) ? 0 : itemId.hashCode());
         return result;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Order other = (Order) obj;
-        if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
-            return false;
-        if (customerID == null) {
-            if (other.customerID != null)
-                return false;
-        } else if (!customerID.equals(other.customerID))
-            return false;
-        if (productCode == null) {
-            if (other.productCode != null)
-                return false;
-        } else if (!productCode.equals(other.productCode))
-            return false;
-        return true;
+    public Double getPrice() {
+        return price;
+    }
+
+    public Order setPrice(Double price) {
+        this.price = price;
+        return this;
     }
 
 }

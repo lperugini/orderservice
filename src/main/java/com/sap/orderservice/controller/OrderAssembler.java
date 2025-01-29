@@ -10,12 +10,13 @@ import com.sap.orderservice.model.Order;
 
 @Component
 public class OrderAssembler implements RepresentationModelAssembler<Order, EntityModel<Order>> {
+
     @Override
     public EntityModel<Order> toModel(Order order) {
 
         return EntityModel.of(order, //
                 linkTo(methodOn(OrderController.class).one(order.getId())).withSelfRel(),
-                linkTo(methodOn(OrderController.class).all()).withRel("orders"));
+                linkTo(methodOn(OrderController.class).all()).withRel("orders")); 
     }
 
 }

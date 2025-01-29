@@ -37,10 +37,13 @@ public class OrderController {
         return CollectionModel.of(orders, linkTo(methodOn(OrderController.class).all()).withSelfRel());
     }
 
-    @PostMapping("/orders")
-    Order newOrder(@RequestBody Order newOrder) {
-        return repository.save(newOrder);
-    }
+    /*
+     * @PostMapping("/orders")
+     * Order newOrder(@RequestBody Order newOrder) {
+     * System.out.println("new order");
+     * return repository.save(newOrder);
+     * }
+     */
 
     // Single item
     @GetMapping("/orders/{id}")
@@ -50,26 +53,20 @@ public class OrderController {
         return assembler.toModel(order);
     }
 
-    // Single item
-    @GetMapping("/orders/forcustomer/{customerid}")
-    CollectionModel<EntityModel<Order>> findByCustomer(@PathVariable Long customerid) {
-
-        // .orElseThrow(() -> new OrderNotFoundException(customerid));
-        // return assembler.toModel(order);
-        List<EntityModel<Order>> orders = repository.findByCustomer(customerid).stream()
-                .map(assembler::toModel)
-                .collect(Collectors.toList());
-
-        return CollectionModel.of(orders, linkTo(methodOn(OrderController.class).all()).withSelfRel());
+    // count item
+    @GetMapping("/orders/count")
+    void count() {
+        System.out.println(repository.count());
     }
 
     @PutMapping("/orders/{id}")
     Order replaceOrder(@RequestBody Order newOrder, @PathVariable Long id) {
-
         return repository.findById(id)
                 .map(order -> {
-                    order.setCustomer(newOrder.getCustomer());
-                    order.setProduct(newOrder.getProduct());
+                    order.setUser(newOrder.getUser())
+                            .setItem(newOrder.getItem())
+                            .setPrice(newOrder.getPrice())
+                            .setDescription(newOrder.getDescription());
                     return repository.save(order);
                 })
                 .orElseGet(() -> {
