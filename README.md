@@ -98,8 +98,16 @@ Ecco alcuni degli endpoint disponibili:
 - **GET** `/orders` → Restituisce la lista di tutti gli ordini.
 - **GET** `/orders/{id}` → Ottiene i dettagli di un ordine specifico.
 - **PUT** `/orders/{id}` → Modifica le informazioni di un'ordine esistente.
+```json
+{
+    "id": 1,
+    "item": 1,
+    "user": 1,
+    "description": "Some useful description.",
+    "price": 9.99
+}
+```
 - **DELETE** `/orders/{id}` → Ottiene i dettagli di un ordine specifico.
 
 ---
 **Autore:** _Leonardo Perugini - leonardo.perugini2@studio.unibo.it_
-
