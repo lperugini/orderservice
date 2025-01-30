@@ -107,7 +107,7 @@ Ecco alcuni degli endpoint disponibili:
     "price": 9.99
 }
 ```
-- **DELETE** `/orders/{id}` → Ottiene i dettagli di un ordine specifico.
+- **DELETE** `/orders/{id}` → Rimuove un ordine esistente.
 
 ---
 **Autore:** _Leonardo Perugini - leonardo.perugini2@studio.unibo.it_
