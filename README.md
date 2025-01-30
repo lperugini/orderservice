@@ -1,6 +1,6 @@
 # OrderService
 
-OrderService è un semolice microservizio per la gestione degli ordini, sviluppato in **Spring Boot** con supporto a **RabbitMQ** e **H2 Database**.
+OrderService è un semplice microservizio per la gestione degli ordini, sviluppato in **Spring Boot** con supporto a **RabbitMQ** e **H2 Database**.
 
 Questa versione rappresenta una demo accademica. 
 
