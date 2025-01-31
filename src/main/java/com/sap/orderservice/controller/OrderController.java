@@ -28,6 +28,11 @@ public class OrderController {
     @Autowired
     private OrderAssembler assembler;
 
+    @GetMapping("/hello")
+    String hello() {
+        return "Hello, World!";
+    }
+
     @GetMapping("/orders")
     CollectionModel<EntityModel<Order>> all() {
         List<EntityModel<Order>> orders = repository.findAll().stream()
@@ -61,6 +66,8 @@ public class OrderController {
 
     @PutMapping("/orders/{id}")
     Order replaceOrder(@RequestBody Order newOrder, @PathVariable Long id) {
+        System.out.println(newOrder.toString());
+        System.out.println(repository.findById(id).toString());
         return repository.findById(id)
                 .map(order -> {
                     order.setUser(newOrder.getUser())

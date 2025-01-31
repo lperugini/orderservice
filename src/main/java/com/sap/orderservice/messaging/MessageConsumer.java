@@ -33,6 +33,7 @@ public class MessageConsumer {
                 order = optionalOrder.get();
                 order.setUser(newOrder.getUser());
                 order.setItem(newOrder.getItem());
+                order.setDescription(newOrder.getDescription());
             }
         } 
         

@@ -18,9 +18,12 @@ class LoadDatabase {
     CommandLineRunner initDatabase(OrderRepo repository) {
 
         return args -> {
-            log.info("Preloading " + repository.save(new Order(1L, 3L)));
-            log.info("Preloading " + repository.save(new Order(2L, 2L)));
-            log.info("Preloading " + repository.save(new Order(2L, 1L)));
+            log.info("Preloading " + repository
+                    .save(new Order(1L, 3L, "Descrizione del primo ordine caricato su PeriziaFacile.", 50.0)));
+            log.info("Preloading " + repository
+                    .save(new Order(2L, 2L, "Descrizione del secondo ordine caricato su PeriziaFacile.", 100.0)));
+            log.info("Preloading " + repository
+                    .save(new Order(2L, 1L, "Descrizione del terzo ordine caricato su PeriziaFacile.", 150.0)));
         };
     }
 }
