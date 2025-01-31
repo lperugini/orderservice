@@ -4,6 +4,12 @@ OrderService è un semplice microservizio per la gestione degli ordini, sviluppa
 
 Questa versione rappresenta una demo accademica. 
 
+OrderService è sviluppato come microservizio autonomo ma è da intendersi come parte di un sistema composto da:
+- **userservice** per la gestione degli utenti.
+- **itemservice** per la gestione dei prodotti.
+- **paymentservice** per la gestione dei pagamenti.
+- un API **gateway**.
+
 ## Avvio del Servizio
 
 ### **1. Prerequisiti**
@@ -93,7 +99,7 @@ docker-compose up --build
 
 
 ## **API Endpoints**
-Ecco alcuni degli endpoint disponibili:
+Ecco gli endpoint disponibili:
 
 - **GET** `/orders` → Restituisce la lista di tutti gli ordini.
 - **GET** `/orders/{id}` → Ottiene i dettagli di un ordine specifico.
