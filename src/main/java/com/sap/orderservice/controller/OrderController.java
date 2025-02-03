@@ -35,7 +35,23 @@ public class OrderController {
 
     @GetMapping("/orders")
     CollectionModel<EntityModel<Order>> all() {
+        System.out.println("all");
+
         List<EntityModel<Order>> orders = repository.findAll().stream()
+                .map(assembler::toModel)
+                .collect(Collectors.toList());
+
+        return CollectionModel.of(orders, linkTo(methodOn(OrderController.class).all()).withSelfRel());
+    }
+
+    @GetMapping("/orders/for/{userId}")
+    CollectionModel<EntityModel<Order>> allForUser(@PathVariable Long userId) {
+        System.out.println("for" + userId);
+
+        List<EntityModel<Order>> orders = repository
+                .findAll()
+                .stream()
+                .filter(order -> order.getUser().equals(userId))
                 .map(assembler::toModel)
                 .collect(Collectors.toList());
 
