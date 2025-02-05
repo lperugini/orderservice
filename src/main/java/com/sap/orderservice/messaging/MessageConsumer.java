@@ -1,7 +1,5 @@
 package com.sap.orderservice.messaging;
 
-import java.util.Optional;
-
 import org.json.JSONObject;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,25 +17,14 @@ public class MessageConsumer {
     // Questo metodo ascolta i messaggi in arrivo nella coda 'orderQueue'
     @RabbitListener(queues = MessageConfig.QUEUE_NAME)
     public void consumeNewOrder(String message) {
-        System.out.println("Ricevuto messaggio: " + message);
-
         JSONObject jsonObject = new JSONObject(message);
-        Order newOrder = new Order(jsonObject.getLong("userId"), jsonObject.getLong("itemId"));
-        Order order = newOrder;
 
-        if (jsonObject.has("id")) {
-            Long id = jsonObject.getLong("id");
-            Optional<Order> optionalOrder = repository.findById(id);
-
-            if (optionalOrder.isPresent()) {
-                order = optionalOrder.get();
-                order.setUser(newOrder.getUser());
-                order.setItem(newOrder.getItem());
-                order.setDescription(newOrder.getDescription());
-            }
-        } 
+        Order newOrder = new Order(
+                jsonObject.getLong("userId"),
+                jsonObject.getLong("itemId"),
+                jsonObject.getString("description"),
+                jsonObject.getDouble("price"));
         
-        repository.save(order);
-        System.out.println("Parsed: " + jsonObject.toString());
+        repository.save(newOrder);
     }
 }
